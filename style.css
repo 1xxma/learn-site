@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-color: #3b3b54;
+    --card-bg: #5c5c78;
+    --text-color: #ffffff;
+    --text-muted: #d1d1e0;
+    --border-color: #6a6a85;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', Arial, sans-serif; /* Добавлен fallback-шрифт */
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden; /* Защита от горизонтальной прокрутки */
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+/* --- Шапка --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap; /* Позволяет шапке переноситься на мобильных */
+    gap: 15px;
+}
+
+.logo {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    font-size: 16px;
+    font-weight: 500;
+    flex-wrap: wrap;
+}
+
+nav a {
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color 0.3s;
+}
+
+nav a:hover, nav a.active {
+    border-bottom: 1px solid var(--text-color);
+}
+
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0; /* Иконка не сжимается */
+    border-radius: 50%;
+    background-color: #e0e0e8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #3b3b54;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.profile-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: #3b3b54;
+    stroke-width: 2;
+}
+
+/* --- Главная страница --- */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    padding: 60px 40px;
+    flex-grow: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    gap: 40px;
+    flex-wrap: wrap; /* Переносит блоки, если экран узкий */
+}
+
+.hero-text {
+    flex: 1 1 400px; /* Занимает минимум 400px, растягивается */
+}
+
+.hero-text h1 {
+    font-size: 48px;
+    line-height: 1.2;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.hero-text p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.hero-features {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 0 1 350px; /* Фиксированная ширина, но может сжиматься */
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.feature-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0; /* КЛЮЧЕВОЕ: иконка не сжимается */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feature-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: var(--text-color);
+}
+
+.feature-text {
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+/* --- Футер --- */
+footer {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px 40px;
+    border-top: 1px solid var(--border-color);
+    flex-wrap: wrap;
+}
+
+.footer-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-muted);
+    white-space: nowrap; /* Текст не переносится */
+}
+
+.footer-item svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0; /* Иконка не сжимается */
+    stroke: var(--text-muted);
+    fill: none;
+    stroke-width: 1.5;
+}
+
+/* --- Страница предметов --- */
+.subjects-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 40px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.back-btn svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    stroke: var(--text-color);
+}
+
+.subjects-container {
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: wrap; /* Позволяет панелям переноситься */
+}
+
+.subjects-panel {
+    flex: 1 1 500px; /* Занимает половину, но переносится при нехватке */
+    padding: 40px;
+    border-right: 1px solid var(--border-color);
+}
+
+.level-panel {
+    flex: 1 1 300px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.subjects-panel h2, .level-panel h2 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.subjects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Адаптивная сетка */
+    gap: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.subject-btn, .level-btn {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.subject-btn:hover, .level-btn:hover {
+    background-color: #6a6a85;
+}
+
+.level-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+    max-width: 300px;
+}
