@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEARN - Расписание</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">LEARN</div>
+        <nav>
+            <a href="index.html">Главная</a>
+            <a href="subjects.html">Предметы</a>
+            <a href="reviews.html">Отзывы</a>
+            <a href="about.html">О нас</a>
+            <div class="profile-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </nav>
+    </header>
+
+    <div class="subjects-header">
+        <a href="tutor.html" class="back-btn">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Расписание
+        </a>
+    </div>
+
+    <main class="schedule-container">
+        <!-- ЛЕВАЯ ЧАСТЬ: КАЛЕНДАРЬ -->
+        <div class="schedule-calendar">
+            <div class="calendar-header">
+                <button class="calendar-nav" id="prevMonth" aria-label="Предыдущий месяц">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <h2 id="calendarTitle">Ноябрь 2026</h2>
+                <button class="calendar-nav" id="nextMonth" aria-label="Следующий месяц">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+            <div class="calendar-weekdays">
+                <div>пн</div>
+                <div>вт</div>
+                <div>ср</div>
+                <div>чт</div>
+                <div>пт</div>
+                <div>сб</div>
+                <div>вс</div>
+            </div>
+            <div class="calendar-days" id="calendarDays"></div>
+        </div>
+
+        <!-- ПРАВАЯ ЧАСТЬ: ВРЕМЯ -->
+        <div class="schedule-times" id="scheduleTimes">
+            <div class="times-empty">
+                <p>Выберите дату слева, чтобы увидеть свободное время</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        /* ============================================
+           1. ПРОВЕРКА АВТОРИЗАЦИИ
+           ============================================ */
+        function isLoggedIn() {
+            return localStorage.getItem('isLoggedIn') === 'true';
+        }
+
+        /* ============================================
+           2. НАСТРОЙКИ КАЛЕНДАРЯ
+           ============================================ */
+        const MONTH_NAMES = [
+            'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+            'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+        ];
+
+        // Диапазон: с текущего месяца до декабря 2026
+        const now = new Date();
+        const START_YEAR = now.getFullYear();
+        const START_MONTH = now.getMonth();
+        const END_YEAR = 2026;
+        const END_MONTH = 11; // Декабрь
+
+        let currentYear = START_YEAR;
+        let currentMonth = START_MONTH;
+        let selectedDay = null;
+        let selectedSlot = null;
+
+        /* ============================================
+           3. ЗАНЯТЫЕ СЛОТЫ (СТАТИЧНЫЕ + СОХРАНЁННЫЕ)
+           ============================================ */
+        const busySlots = {
+            '2026-11-02': ['10.00', '14.00', '19.00'],
+            '2026-11-03': ['11.00', '16.00'],
+            '2026-11-05': ['10.00', '13.00', '17.00'],
+            '2026-11-08': ['11.00', '14.00'],
+            '2026-11-11': ['10.00', '16.00', '19.00'],
+            '2026-11-16': ['13.00', '17.00'],
+            '2026-11-19': ['10.00', '11.00', '14.00', '19.00'],
+            '2026-11-23': ['10.00', '13.00'],
+            '2026-11-26': ['14.00', '16.00'],
+            '2026-11-30': ['11.00', '17.00']
+        };
+
+        function loadUserBookings() {
+            const saved = localStorage.getItem('userBookings');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                Object.keys(parsed).forEach(key => {
+                    if (!busySlots[key]) busySlots[key] = [];
+                    parsed[key].forEach(slot => {
+                        if (!busySlots[key].includes(slot)) {
+                            busySlots[key].push(slot);
+                        }
+                    });
+                });
+            }
+        }
+
+        function saveUserBooking(key, slot) {
+            const saved = localStorage.getItem('userBookings');
+            const parsed = saved ? JSON.parse(saved) : {};
+            if (!parsed[key]) parsed[key] = [];
+            if (!parsed[key].includes(slot)) parsed[key].push(slot);
+            localStorage.setItem('userBookings', JSON.stringify(parsed));
+        }
+
+        loadUserBookings();
+
+        const allSlots = ['10.00', '11.00', '13.00', '14.00', '16.00', '17.00', '19.00'];
+
+        /* ============================================
+           4. ФОРМАТИРОВАНИЕ ДАТЫ (YYYY-MM-DD)
+           ============================================ */
+        function formatDateKey(year, month, day) {
+            const m = String(month + 1).padStart(2, '0');
+            const d = String(day).padStart(2, '0');
+            return `${year}-${m}-${d}`;
+        }
+
+        /* ============================================
+           5. ОТРИСОВКА КАЛЕНДАРЯ
+           ============================================ */
+        const calendarDays = document.getElementById('calendarDays');
+        const calendarTitle = document.getElementById('calendarTitle');
+
+        function renderCalendar() {
+            // Обновляем заголовок
+            calendarTitle.textContent = `${MONTH_NAMES[currentMonth]} ${currentYear}`;
+
+            // Обновляем кнопки навигации (неактивны на границах)
+            const prevBtn = document.getElementById('prevMonth');
+            const nextBtn = document.getElementById('nextMonth');
+
+            prevBtn.disabled = (currentYear === START_YEAR && currentMonth === START_MONTH);
+            nextBtn.disabled = (currentYear === END_YEAR && currentMonth === END_MONTH);
+
+            // Очищаем
+            calendarDays.innerHTML = '';
+
+            // Первый день месяца
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const startOffset = (firstDay === 0) ? 6 : firstDay - 1;
+
+            // Количество дней в месяце
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+            // Пустые ячейки
+            for (let i = 0; i < startOffset; i++) {
+                const empty = document.createElement('div');
+                empty.className = 'calendar-day empty';
+                calendarDays.appendChild(empty);
+            }
+
+            // Дни месяца
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day';
+                dayEl.textContent = day;
+                dayEl.dataset.day = day;
+                dayEl.dataset.dateKey = formatDateKey(currentYear, currentMonth, day);
+
+                dayEl.addEventListener('click', () => {
+                    document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('active'));
+                    dayEl.classList.add('active');
+                    selectedDay = day;
+                    selectedSlot = null;
+                    renderTimes();
+                });
+
+                calendarDays.appendChild(dayEl);
+            }
+        }
+
+        /* ============================================
+           6. ПЕРЕКЛЮЧЕНИЕ МЕСЯЦЕВ
+           ============================================ */
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            if (currentMonth === 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else {
+                currentMonth--;
+            }
+            // Проверка границ
+            if (currentYear < START_YEAR || (currentYear === START_YEAR && currentMonth < START_MONTH)) {
+                currentYear = START_YEAR;
+                currentMonth = START_MONTH;
+            }
+            renderCalendar();
+        });
+
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            if (currentMonth === 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else {
+                currentMonth++;
+            }
+            // Проверка границ
+            if (currentYear > END_YEAR || (currentYear === END_YEAR && currentMonth > END_MONTH)) {
+                currentYear = END_YEAR;
+                currentMonth = END_MONTH;
+            }
+            renderCalendar();
+        });
+
+        /* ============================================
+           7. ОТРИСОВКА СЛОТОВ ВРЕМЕНИ
+           ============================================ */
+        function renderTimes() {
+            const container = document.getElementById('scheduleTimes');
+            container.innerHTML = '';
+
+            if (!selectedDay) {
+                container.innerHTML = '<div class="times-empty"><p>Выберите дату слева, чтобы увидеть свободное время</p></div>';
+                return;
+            }
+
+            const dateKey = formatDateKey(currentYear, currentMonth, selectedDay);
+            const busyForDay = busySlots[dateKey] || [];
+
+            const title = document.createElement('h3');
+            title.className = 'times-title';
+            title.textContent = `${selectedDay} ${MONTH_NAMES[currentMonth].toLowerCase()} ${currentYear}`;
+            container.appendChild(title);
+
+            const list = document.createElement('div');
+            list.className = 'times-list';
+
+            allSlots.forEach(slot => {
+                const isBusy = busyForDay.includes(slot);
+
+                const item = document.createElement('div');
+                item.className = 'time-slot' + (isBusy ? ' busy' : '');
+                item.dataset.slot = slot;
+
+                const timeLabel = document.createElement('span');
+                timeLabel.textContent = slot;
+                item.appendChild(timeLabel);
+
+                const circle = document.createElement('div');
+                circle.className = 'time-circle';
+                item.appendChild(circle);
+
+                if (!isBusy) {
+                    item.addEventListener('click', () => {
+                        list.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                        item.classList.add('selected');
+                        selectedSlot = slot;
+                        showBookingButton();
+                    });
+                }
+
+                list.appendChild(item);
+            });
+
+            container.appendChild(list);
+        }
+
+        /* ============================================
+           8. КНОПКА "ЗАПИСАТЬСЯ"
+           ============================================ */
+        function showBookingButton() {
+            const container = document.getElementById('scheduleTimes');
+
+            const oldBtn = container.querySelector('.book-btn-wrapper');
+            if (oldBtn) oldBtn.remove();
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'book-btn-wrapper';
+
+            const btn = document.createElement('button');
+            btn.className = 'book-btn';
+            btn.textContent = 'Записаться';
+            btn.addEventListener('click', handleBooking);
+
+            wrapper.appendChild(btn);
+            container.appendChild(wrapper);
+        }
+
+        /* ============================================
+           9. ОБРАБОТКА ЗАПИСИ
+           ============================================ */
+        function handleBooking() {
+            // Проверка авторизации
+            if (!isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            if (!selectedDay || !selectedSlot) return;
+
+            const dateKey = formatDateKey(currentYear, currentMonth, selectedDay);
+
+            // Сохраняем запись
+            saveUserBooking(dateKey, selectedSlot);
+
+            // Добавляем в занятые
+            if (!busySlots[dateKey]) busySlots[dateKey] = [];
+            if (!busySlots[dateKey].includes(selectedSlot)) {
+                busySlots[dateKey].push(selectedSlot);
+            }
+
+            // Перерисовываем
+            renderTimes();
+
+            // Уведомление
+            alert(`Вы записаны на ${selectedDay} ${MONTH_NAMES[currentMonth].toLowerCase()} в ${selectedSlot} 🎉`);
+        }
+
+        /* ============================================
+           10. СТАРТ
+           ============================================ */
+        renderCalendar();
+    </script>
+<script>
+    // ============================================
+    // ОТОБРАЖЕНИЕ ЛОГИНА В ШАПКЕ
+    // ============================================
+    (function() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const userName = localStorage.getItem('userName');
+
+        if (isLoggedIn && userName) {
+            // Находим ссылку "Войти" в шапке
+            const navLinks = document.querySelectorAll('nav a');
+            let loginLink = null;
+            
+            navLinks.forEach(link => {
+                if (link.textContent.trim() === 'Войти' || link.href.includes('login.html')) {
+                    loginLink = link;
+                }
+            });
+
+            if (loginLink) {
+                // Заменяем на имя пользователя
+                loginLink.textContent = userName;
+                loginLink.href = '#';
+                loginLink.classList.add('user-name-link');
+                loginLink.title = 'Нажмите, чтобы выйти';
+
+                // Клик по имени — выход
+                loginLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (confirm('Выйти из аккаунта?')) {
+                        localStorage.removeItem('isLoggedIn');
+                        localStorage.removeItem('userName');
+                        localStorage.removeItem('userEmail');
+                        localStorage.removeItem('userBookings');
+                        window.location.href = 'index.html';
+                    }
+                });
+            }
+        }
+    })();
+</script>
+</body>
+</html>
