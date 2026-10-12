@@ -1,0 +1,1373 @@
+/* =========================================
+   1. ПОДКЛЮЧЕНИЕ ШРИФТА И ПЕРЕМЕННЫЕ
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-color: #3b3b54;
+    --card-bg: #5c5c78;
+    --text-color: #ffffff;
+    --text-muted: #d1d1e0;
+    --border-color: #6a6a85;
+    --dropdown-bg: #4a4a63;
+    --hover-bg: #6a6a85;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+/* =========================================
+   2. ШАПКА САЙТА (HEADER)
+   ========================================= */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 60px;
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-color);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    font-size: 18px;
+    font-weight: 500;
+    flex-wrap: wrap;
+}
+
+nav a {
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color 0.3s;
+}
+
+nav a:hover, nav a.active {
+    border-bottom: 1px solid var(--text-color);
+}
+
+.profile-icon {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #e0e0e8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #3b3b54;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.profile-icon svg {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: #3b3b54;
+    stroke-width: 2;
+}
+
+/* =========================================
+   3. ГЛАВНАЯ СТРАНИЦА (HERO)
+   ========================================= */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 80px 100px;
+    flex-grow: 1;
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+    gap: 80px;
+    flex-wrap: wrap;
+}
+
+.hero-text {
+    flex: 1 1 600px;
+    padding-top: 20px;
+}
+
+.hero-text h1 {
+    font-size: 72px;
+    line-height: 1.1;
+    font-weight: 700;
+    margin-bottom: 45px;
+    letter-spacing: -1.5px;
+}
+
+.hero-text p {
+    font-size: 22px;
+    line-height: 1.55;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.hero-features {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 480px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0;
+    overflow: hidden;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 28px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.feature-item:last-child {
+    border-bottom: none;
+}
+
+.feature-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feature-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: #ffffff;
+    stroke-width: 1.4;
+}
+
+.feature-text {
+    font-size: 19px;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* =========================================
+   4. ФУТЕР (НИЖНЯЯ ПАНЕЛЬ)
+   ========================================= */
+footer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px 60px;
+    border-top: 1px solid var(--border-color);
+    flex-wrap: wrap;
+}
+
+.footer-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: rgba(255, 255, 255, 0.06);
+    padding: 15px 28px;
+    border-radius: 10px;
+    font-size: 17px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.footer-item svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    stroke: var(--text-muted);
+    fill: none;
+    stroke-width: 1.6;
+}
+
+/* =========================================
+   5. СТРАНИЦА ПРЕДМЕТОВ (SUBJECTS)
+   ========================================= */
+.subjects-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 60px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.back-btn svg {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    stroke: var(--text-color);
+}
+
+.subjects-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.subjects-panel-full {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 40px;
+}
+
+.subjects-panel-full h2 {
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.subjects-grid-full {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.subject-item {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.subject-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 10px;
+    padding: 28px 30px;
+    font-size: 19px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.subject-btn:hover {
+    background-color: var(--hover-bg);
+}
+
+.subject-btn.active {
+    background-color: var(--hover-bg);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.arrow-icon {
+    transition: transform 0.3s;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+}
+
+.subject-btn.active .arrow-icon {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    display: none;
+    flex-direction: column;
+    background-color: var(--dropdown-bg);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.dropdown-menu.show {
+    display: flex;
+}
+
+.dropdown-menu a {
+    padding: 20px 30px;
+    color: var(--text-muted);
+    font-size: 17px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s, color 0.2s;
+    text-decoration: none;
+}
+
+.dropdown-menu a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: #5c5c78;
+    color: #ffffff;
+}
+
+/* =========================================
+   6. СТРАНИЦА РЕПЕТИТОРА (TUTOR)
+   ========================================= */
+.tutor-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 60px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.tutor-header svg {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    stroke: var(--text-color);
+}
+
+.tutor-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.tutor-info {
+    flex: 1 1 600px;
+}
+
+.tutor-info h1 {
+    font-size: 40px;
+    font-weight: 500;
+    margin-bottom: 35px;
+}
+
+.tutor-details {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.detail-row {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.detail-row strong {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.detail-row span {
+    color: var(--text-muted);
+}
+
+.tutor-photo-block {
+    flex: 0 1 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.tutor-photo {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    object-fit: cover;
+    display: block;
+    border: 4px solid #2a2a4a;
+}
+
+.schedule-btn {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 10px;
+    padding: 25px;
+    font-size: 19px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.schedule-btn:hover {
+    background-color: var(--hover-bg);
+}
+
+/* =========================================
+   7. СТРАНИЦА ОТЗЫВОВ (REVIEWS)
+   ========================================= */
+.reviews-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.reviews-panel {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 40px;
+}
+
+.reviews-panel h2 {
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 45px;
+    text-align: center;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.review-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.review-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.review-avatar {
+    width: 55px;
+    height: 55px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #e0e0e8;
+    color: #3b3b54;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.review-author {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.review-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.review-role {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.review-stars {
+    font-size: 20px;
+    color: #ffd166;
+    letter-spacing: 3px;
+}
+
+.review-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+.review-subject {
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 500;
+    opacity: 0.85;
+}
+
+/* =========================================
+   8. СТРАНИЦА "О НАС" (ABOUT)
+   ========================================= */
+.about-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 80px 100px;
+    max-width: 1500px;
+    margin: 0 auto;
+    width: 100%;
+    gap: 60px;
+    flex-wrap: wrap;
+    flex-grow: 1;
+}
+
+.about-text {
+    flex: 1 1 550px;
+}
+
+.about-text h1 {
+    font-size: 56px;
+    line-height: 1.15;
+    font-weight: 700;
+    margin-bottom: 35px;
+    letter-spacing: -1px;
+    color: #ffffff;
+}
+
+.about-text p {
+    font-size: 22px;
+    line-height: 1.55;
+    color: #8e8ec4;
+}
+
+.about-illustration {
+    flex: 0 1 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-illustration svg {
+    width: 100%;
+    height: auto;
+    max-width: 500px;
+    filter: drop-shadow(0 0 40px rgba(120, 100, 255, 0.3));
+}
+
+/* =========================================
+   9. СТРАНИЦА "ВОЙТИ" (LOGIN)
+   ========================================= */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding: 60px 40px;
+    width: 100%;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 500px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 45px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.login-card h1 {
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.login-subtitle {
+    font-size: 16px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-muted);
+    padding-left: 4px;
+}
+
+.form-input {
+    width: 100%;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 18px 22px;
+    font-size: 16px;
+    font-family: 'Montserrat', Arial, sans-serif;
+    outline: none;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.form-input::placeholder {
+    color: #9a9ab8;
+}
+
+.form-input:focus {
+    border-color: #8e8ec4;
+    background-color: #66668a;
+}
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper .form-input {
+    padding-right: 55px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s;
+}
+
+.toggle-password:hover {
+    color: #ffffff;
+}
+
+.login-submit-btn {
+    background-color: #6a6a85;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.login-submit-btn:hover {
+    background-color: #7a7a9a;
+}
+
+.login-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 15px;
+    color: var(--text-muted);
+}
+
+.login-link {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+.login-link:hover {
+    color: #c4c4ff;
+}
+
+/* =========================================
+   10. СООБЩЕНИЯ ОБ ОШИБКАХ В ФОРМАХ
+   ========================================= */
+.form-error {
+    font-size: 13px;
+    color: #ff6b6b;
+    padding-left: 4px;
+    margin-top: 4px;
+    min-height: 0;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.form-error.visible {
+    opacity: 1;
+}
+
+.form-input.input-error {
+    border-color: #ff6b6b;
+    background-color: rgba(255, 107, 107, 0.08);
+}
+
+/* =========================================
+   11. ЧЕКБОКС СОГЛАСИЯ
+   ========================================= */
+.form-checkbox {
+    margin-top: 5px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-muted);
+    padding-left: 0;
+}
+
+.checkbox-label input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    margin-top: 2px;
+    background-color: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.checkbox-label input[type="checkbox"]:hover {
+    border-color: #8e8ec4;
+}
+
+.checkbox-label input[type="checkbox"]:checked {
+    background-color: #8e8ec4;
+    border-color: #8e8ec4;
+}
+
+.checkbox-label input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* =========================================
+   12. СТРАНИЦА РАСПИСАНИЯ (SCHEDULE)
+   ========================================= */
+.schedule-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+    padding: 60px 80px;
+    max-width: 1300px;
+    margin: 0 auto;
+    width: 100%;
+    flex-wrap: wrap;
+    flex-grow: 1;
+}
+
+.schedule-calendar {
+    flex: 0 1 620px;
+    background-color: #8f8fbc;
+    border-radius: 20px;
+    padding: 35px 40px 40px;
+    color: #ffffff;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.calendar-header h2 {
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin: 0;
+    text-align: center;
+    flex: 1;
+}
+
+.calendar-nav {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ffffff;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s, opacity 0.2s;
+    flex-shrink: 0;
+}
+
+.calendar-nav:hover:not(:disabled) {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.calendar-nav:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+}
+
+.calendar-day {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #e0e0ee;
+    color: #4a4a7a;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    user-select: none;
+}
+
+.calendar-day.empty {
+    background-color: transparent;
+    cursor: default;
+}
+
+.calendar-day:not(.empty):hover {
+    background-color: #ffffff;
+    transform: scale(1.05);
+}
+
+.calendar-day.active {
+    background-color: #3b3b54;
+    color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+.schedule-times {
+    flex: 0 1 320px;
+    background-color: #3b3b54;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    min-height: 400px;
+    color: #ffffff;
+}
+
+.times-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: 350px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 0 20px;
+}
+
+.times-title {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.times-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.time-slot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: #4a4a63;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: #ffffff;
+}
+
+.time-slot:hover:not(.busy) {
+    background-color: #5c5c78;
+}
+
+.time-slot.selected {
+    background-color: #8e8ec4;
+    color: #ffffff;
+}
+
+.time-slot.busy {
+    cursor: not-allowed;
+    color: #7a7a9a;
+    text-decoration: line-through;
+}
+
+.time-circle {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #d1d1e0;
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.time-slot:not(.busy):hover .time-circle {
+    border-color: #ffffff;
+}
+
+.time-slot.selected .time-circle {
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
+
+.time-slot.selected .time-circle::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 11px;
+    border: solid #3b3b54;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.time-slot.busy .time-circle {
+    border-color: #7a7a9a;
+    opacity: 0.6;
+}
+
+/* =========================================
+   13. КНОПКА "ЗАПИСАТЬСЯ" В РАСПИСАНИИ
+   ========================================= */
+.book-btn-wrapper {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.book-btn {
+    width: 100%;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.15s;
+    font-family: 'Montserrat', Arial, sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.book-btn:hover {
+    background-color: var(--hover-bg);
+    transform: translateY(-2px);
+}
+
+.book-btn:active {
+    transform: translateY(0);
+}
+
+/* =========================================
+   14. ИМЯ ПОЛЬЗОВАТЕЛЯ В ШАПКЕ
+   ========================================= */
+.user-name-link {
+    color: #ffffff;
+    font-weight: 600;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color 0.3s, color 0.3s;
+    cursor: pointer;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.user-name-link:hover {
+    border-bottom: 1px solid #ffffff;
+    color: #c4c4ff;
+}
+
+/* =========================================
+   15. АДАПТИВНОСТЬ (ДЛЯ МОБИЛЬНЫХ)
+   ========================================= */
+@media (max-width: 1200px) {
+    .hero {
+        padding: 60px 50px;
+        gap: 50px;
+    }
+    .hero-text h1 {
+        font-size: 56px;
+    }
+}
+
+@media (max-width: 992px) {
+    header, .subjects-header, .tutor-header {
+        padding: 20px 30px;
+    }
+    .hero {
+        padding: 40px 30px;
+        gap: 40px;
+    }
+    .hero-text h1 {
+        font-size: 44px;
+    }
+    .hero-text p {
+        font-size: 18px;
+    }
+    footer {
+        padding: 20px 30px;
+    }
+    .tutor-container {
+        padding: 40px 30px;
+    }
+    .schedule-container {
+        padding: 40px 30px;
+        gap: 30px;
+    }
+    .schedule-calendar {
+        padding: 25px 25px 30px;
+    }
+    .calendar-header h2 {
+        font-size: 24px;
+    }
+    .calendar-day {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Шапка */
+    header {
+        padding: 15px 20px;
+    }
+    .logo {
+        font-size: 28px;
+    }
+    nav {
+        gap: 15px;
+        font-size: 14px;
+    }
+    .profile-icon {
+        width: 38px;
+        height: 38px;
+    }
+    .user-name-link {
+        max-width: 100px;
+        font-size: 14px;
+    }
+
+    /* Главная */
+    .hero {
+        padding: 30px 20px;
+        flex-direction: column;
+    }
+    .hero-text h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+        letter-spacing: 0;
+    }
+    .hero-text p {
+        font-size: 15px;
+    }
+    .hero-features {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+    .feature-item {
+        padding: 18px 20px;
+        gap: 15px;
+    }
+    .feature-icon {
+        width: 26px;
+        height: 26px;
+    }
+    .feature-text {
+        font-size: 15px;
+    }
+
+    /* Футер */
+    footer {
+        padding: 15px 20px;
+        gap: 10px;
+    }
+    .footer-item {
+        font-size: 13px;
+        padding: 10px 16px;
+    }
+
+    /* Предметы */
+    .subjects-grid-full {
+        grid-template-columns: 1fr;
+    }
+    .subjects-panel-full {
+        padding: 25px 20px;
+    }
+    .subjects-panel-full h2 {
+        font-size: 22px;
+    }
+    .subject-btn {
+        font-size: 16px;
+        padding: 20px;
+    }
+
+    /* Репетитор */
+    .tutor-container {
+        padding: 25px 20px;
+        gap: 30px;
+    }
+    .tutor-info h1 {
+        font-size: 26px;
+    }
+    .detail-row {
+        font-size: 15px;
+    }
+    .tutor-photo-block {
+        flex: 1 1 100%;
+    }
+
+    /* Отзывы */
+    .reviews-panel {
+        padding: 25px 20px;
+    }
+    .reviews-panel h2 {
+        font-size: 22px;
+        margin-bottom: 25px;
+    }
+    .reviews-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .review-card {
+        padding: 22px;
+    }
+    .review-avatar {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    .review-name {
+        font-size: 16px;
+    }
+    .review-text {
+        font-size: 14px;
+    }
+
+    /* О нас */
+    .about-container {
+        padding: 30px 20px;
+        gap: 30px;
+        flex-direction: column;
+    }
+    .about-text h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+        letter-spacing: 0;
+    }
+    .about-text p {
+        font-size: 16px;
+    }
+    .about-illustration {
+        flex: 1 1 100%;
+    }
+
+    /* Логин / Регистрация */
+    .login-container {
+        padding: 30px 20px;
+    }
+    .login-card {
+        padding: 30px 25px;
+    }
+    .login-card h1 {
+        font-size: 24px;
+    }
+    .login-subtitle {
+        font-size: 14px;
+    }
+    .form-input {
+        padding: 15px 18px;
+        font-size: 15px;
+    }
+    .login-submit-btn {
+        font-size: 16px;
+        padding: 17px;
+    }
+    .login-footer {
+        font-size: 14px;
+    }
+
+    /* Расписание */
+    .schedule-container {
+        padding: 25px 20px;
+        flex-direction: column;
+    }
+    .schedule-calendar,
+    .schedule-times {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+    .schedule-times {
+        min-height: auto;
+        padding: 25px 20px;
+    }
+    .times-empty {
+        min-height: 150px;
+    }
+    .calendar-header h2 {
+        font-size: 22px;
+    }
+    .calendar-nav svg {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+/* =========================================
+   16. МАЛЕНЬКИЕ ЭКРАНЫ (ДО 480px)
+   ========================================= */
+@media (max-width: 480px) {
+    header {
+        padding: 12px 15px;
+    }
+    .logo {
+        font-size: 22px;
+        letter-spacing: 1px;
+    }
+    nav {
+        gap: 10px;
+        font-size: 13px;
+    }
+    .profile-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+    .hero {
+        padding: 20px 15px;
+    }
+    .hero-text h1 {
+        font-size: 26px;
+        margin-bottom: 15px;
+    }
+    .hero-text p {
+        font-size: 14px;
+    }
+    .feature-item {
+        padding: 15px 16px;
+        gap: 12px;
+    }
+
+    footer {
+        padding: 12px 15px;
+        gap: 8px;
+    }
+    .footer-item {
+       
